@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:36:19 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/16 14:31:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:35:17 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int ac, char **av)
         if (!main_program)
         	error_on_alocate();
 		init_main(ac, av, &main_program);
-		printf("%ld\n", main_program->time);
+		printf("Time: %ld\n", main_program->time);
 		philo = (t_philo *)malloc(sizeof(t_philo) * main_program->n_philo);
 		thread = (pthread_t *)malloc(sizeof(pthread_t) * main_program->n_philo);
 		fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
