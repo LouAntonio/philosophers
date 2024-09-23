@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:49:10 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/23 13:04:27 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:55:54 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_isallnum(char *str)
 
 void	check_args(char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (av[++i])
@@ -41,7 +41,8 @@ void	check_args(char **av)
 void	print_message(t_philo *philo, char *message, char *color)
 {
 	pthread_mutex_lock(philo->message);
-	printf("%s%ldms philo %d %s\n", color, current_timestamp() - philo->main->time, philo->id, message);
+	printf("%s%ldms philo %d %s\n", color,
+		current_timestamp() - philo->main->time, philo->id, message);
 	pthread_mutex_unlock(philo->message);
 }
 
@@ -55,8 +56,8 @@ unsigned long	current_timestamp(void)
 
 int	ft_atoi(char *str)
 {
-	int res;
-	int sign;
+	int	res;
+	int	sign;
 
 	res = 0;
 	sign = 1;
