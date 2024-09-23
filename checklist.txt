@@ -1,0 +1,19 @@
+1. Verificar argumentos
+2. Inicializar a estrutura do programa
+3. Inicializar mutex do programa
+4. Alocar estruturas (philo, fork e thread)
+5. Inicializar philo
+6. Inicializar mutexes
+7. Criar threads
+8. Monitorar mortes
+	Loop até que um dos philos esteja morto
+		loop de acordo com a qtd de philos
+			se (o tempo atual - a última refeição do philo) > t_dead + 4
+				definir o philo como morto
+				imprimir que o philo morreu
+				fechar
+			se todos já tiverem comido o suficiente
+				fechar
+9. Unir threads
+10. Destruir mutexes
+11. Verificar leaks

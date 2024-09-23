@@ -6,7 +6,7 @@
 #    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 16:35:01 by lantonio          #+#    #+#              #
-#    Updated: 2024/09/16 14:35:02 by lantonio         ###   ########.fr        #
+#    Updated: 2024/09/23 13:20:10 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ CC		=  cc
 FLAGS	= -Wall -Wextra -Werror
 
 SRCS	= philosophers.c\
-			./srcs/utils.c
+			./srcs/utils.c\
+			./srcs/initialize.c\
+			./srcs/getters.c\
 
 OBJS	= $(SRCS:.c=.o)
 

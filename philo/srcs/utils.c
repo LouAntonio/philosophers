@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:49:10 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/16 09:11:09 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:04:27 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,35 @@ void	check_args(char **av)
 	}
 }
 
-#include <ctype.h>
-
-int ft_atoi(char *str)
+void	print_message(t_philo *philo, char *message, char *color)
 {
-    int res = 0;
-    int sign = 1;
+	pthread_mutex_lock(philo->message);
+	printf("%s%ldms philo %d %s\n", color, current_timestamp() - philo->main->time, philo->id, message);
+	pthread_mutex_unlock(philo->message);
+}
 
-    // Ignorar espaços em branco e caracteres de controle
-    while (isspace(*str))
-        str++;
+unsigned long	current_timestamp(void)
+{
+	struct timeval	tv;
 
-    // Verificar o sinal
-    if (*str == '-')
-    {
-        sign = -1;
-        str++;
-    }
-    else if (*str == '+')
-    {
-        str++;
-    }
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
 
-    // Converter números
-    while (isdigit(*str))
-    {
-        res = res * 10 + (*str - '0');
-        str++;
-    }
+int	ft_atoi(char *str)
+{
+	int res;
+	int sign;
 
-    return res * sign;
+	res = 0;
+	sign = 1;
+	while (*str <= 13)
+		str++;
+	if (*str == '-')
+		sign = -1;
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str >= '0' && *str <= '9')
+		res = res * 10 + (*str++ - '0');
+	return (res * sign);
 }
