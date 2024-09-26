@@ -17,9 +17,8 @@ FLAGS	= -Wall -Wextra -Werror
 SRCS	= philosophers.c\
 			./srcs/run.c\
 			./srcs/utils.c\
-			./srcs/getters.c\
-			./srcs/setters.c\
 			./srcs/initialize.c\
+			./srcs/get_and_set.c\
 
 OBJS	= $(SRCS:.c=.o)
 

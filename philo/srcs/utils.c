@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:49:10 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/25 13:35:51 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:30:58 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,31 @@ int	ft_isallnum(char *str)
 	return (1);
 }
 
-void	check_args(char **av)
+int	check_args(int ac, char **av)
 {
 	int	i;
 
 	i = 0;
-	while (av[++i])
+	if (ac == 5 || ac == 6)
 	{
-		if (!ft_isallnum(av[i]))
+		while (av[++i])
 		{
-			printf("Error\nARG %d (%s) is not an integer value,", i, av[i]);
-			printf(" or is lower then 0\n");
-			exit(1);
+			if (!ft_isallnum(av[i]))
+			{
+				printf("Error\nARG %d (%s) is not an integer value,", i, av[i]);
+				printf(" or is lower then 0\n");
+				return (1);
+			}
 		}
+		return (1);
 	}
+	return (0);
 }
 
 void	print_message(t_philo *philo, char *message, char *color)
 {
 	pthread_mutex_lock(philo->message);
-	printf("%s%ldms philo %d %s\n", color,
+	printf("%s%ldms %d %s\n", color,
 		current_timestamp() - philo->main->time, philo->id, message);
 	pthread_mutex_unlock(philo->message);
 }

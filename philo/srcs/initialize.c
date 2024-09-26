@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:06:28 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/23 13:53:45 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:30:51 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	init_main(int ac, char **av, t_main *main_program)
 		main_program->t_meals = ft_atoi(av[5]);
 }
 
-void	init_mutexes(t_main *main_program, pthread_mutex_t *fork,
+int	init_mutexes(t_main *main_program, pthread_mutex_t *fork,
 	pthread_mutex_t print_locker)
 {
 	int	i;
@@ -57,23 +57,24 @@ void	init_mutexes(t_main *main_program, pthread_mutex_t *fork,
 		if (pthread_mutex_init(&fork[i], NULL) != 0)
 		{
 			perror("Error while initializating mutex");
-			exit(1);
+			return (1);
 		}
 		i++;
 	}
 	if (pthread_mutex_init(&main_program->main_mutex, NULL) != 0)
 	{
 		perror("Error while initializating mutex");
-		exit(1);
+		return (1);
 	}
 	if (pthread_mutex_init(&print_locker, NULL) != 0)
 	{
 		perror("Error while initializating mutex");
-		exit(1);
+		return (1);
 	}
+	return (0);
 }
 
-void	init_threads(t_main *main_program, t_philo *philo, pthread_t *thread)
+int	init_threads(t_main *main_program, t_philo *philo, pthread_t *thread)
 {
 	int	i;
 
@@ -83,19 +84,21 @@ void	init_threads(t_main *main_program, t_philo *philo, pthread_t *thread)
 		if (pthread_create(&thread[i], NULL, &philo_routine, &philo[i]) != 0)
 		{
 			perror("Error while creating threads");
-			exit(1);
+			return (1);
 		}
 		usleep(100);
 		i++;
 	}
+	return (0);
 }
 
-void	allocate_resources(t_philo **philo, pthread_t **thread,
+int	allocate_resources(t_philo **philo, pthread_t **thread,
 	pthread_mutex_t **fork, int n_philo)
 {
 	*philo = (t_philo *)malloc(sizeof(t_philo) * n_philo);
 	*thread = (pthread_t *)malloc(sizeof(pthread_t) * n_philo);
 	*fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * n_philo);
 	if (!(*philo) || !(*thread) || !(*fork))
-		error_on_alocate();
+		return (printf("Error while alocating memmory\n"), 1);
+	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getters.c                                          :+:      :+:    :+:   */
+/*   get_and_set.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 11:59:17 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/25 12:49:18 by lantonio         ###   ########.fr       */
+/*   Created: 2024/09/26 13:33:26 by lantonio          #+#    #+#             */
+/*   Updated: 2024/09/26 13:30:46 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,13 @@ int	get_t_meals(t_main main_program)
 	value = main_program.t_meals;
 	pthread_mutex_unlock(&main_program.main_mutex);
 	return (value);
+}
+
+void	set_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->main->main_mutex);
+	philo->meals += 1;
+	if (philo->meals == philo->main->t_meals)
+		philo->eaten_enouth = 1;
+	pthread_mutex_unlock(&philo->main->main_mutex);
 }
