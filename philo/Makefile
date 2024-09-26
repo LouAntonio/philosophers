@@ -18,6 +18,7 @@ SRCS	= philosophers.c\
 			./srcs/run.c\
 			./srcs/utils.c\
 			./srcs/getters.c\
+			./srcs/setters.c\
 			./srcs/initialize.c\
 
 OBJS	= $(SRCS:.c=.o)

@@ -22,8 +22,8 @@ void	init_philo(t_philo *philo, t_main *main_program,
 	{
 		philo[i].id = i + 1;
 		philo[i].last_meal = current_timestamp();
-		philo[i].eaten = 0;
-		philo[i].no_eat = 0;
+		philo[i].meals = 0;
+		philo[i].eaten_enouth = 0;
 		philo[i].message = print_locker;
 		philo[i].left_fork = &fork[i];
 		philo[i].right_fork = &fork[(i + 1) % main_program->n_philo];

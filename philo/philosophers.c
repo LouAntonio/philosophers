@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:36:19 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/23 13:50:17 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/25 09:54:07 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ void	error_on_alocate(void)
 {
 	printf("Error while alocating memmory\n");
 	exit(1);
+}
+
+void	ac_error(void)
+{
+	printf("Error\nCheck the number of params\n./philosophers [n_philo]");
+	printf(" [t_die] [t_eat] [t_sleep] [n_meals (optional)]\n");
 }
 
 int	main(int ac, char **av)
@@ -37,10 +43,8 @@ int	main(int ac, char **av)
 		check_death(&main_program, philo);
 		join_threads(thread, main_program.n_philo);
 		destroy_mutexes(fork, main_program.n_philo);
+		exit(1);
 	}
 	else
-	{
-		printf("Error\nCheck the number of params\n./philosophers [n_philo]");
-		printf(" [t_die] [t_eat] [t_sleep] [n_meals (optional)]\n");
-	}
+		ac_error();
 }

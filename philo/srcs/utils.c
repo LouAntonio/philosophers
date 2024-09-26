@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:49:10 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/23 13:55:54 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:35:51 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_isallnum(char *str)
 {
+	if (!(ft_atoi(str) >= 1))
+		return (0);
 	while (*str)
 	{
 		if (!(*str >= 48 && *str <= 57))
@@ -32,7 +34,8 @@ void	check_args(char **av)
 	{
 		if (!ft_isallnum(av[i]))
 		{
-			printf("Error\nARG %d %s is not an integer value\n", i, av[i]);
+			printf("Error\nARG %d (%s) is not an integer value,", i, av[i]);
+			printf(" or is lower then 0\n");
 			exit(1);
 		}
 	}
