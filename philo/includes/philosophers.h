@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:06:57 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/26 12:08:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:53:21 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 int				ft_atoi(char *str);
 int				check_args(int ac, char **av);
 unsigned long	current_timestamp(void);
+void			print_death(t_philo *philo, char *message, char *color);
 void			print_message(t_philo *philo, char *message, char *color);
 
 // INITIALIZATION

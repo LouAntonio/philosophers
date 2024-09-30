@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:06:28 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/26 13:30:51 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:58:45 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	init_main(int ac, char **av, t_main *main_program)
 	main_program->all_eaten = 0;
 	main_program->time = current_timestamp();
 	if (ac == 6)
+	{
+		main_program->all_eaten = 1;
 		main_program->t_meals = ft_atoi(av[5]);
+	}
 }
 
 int	init_mutexes(t_main *main_program, pthread_mutex_t *fork,

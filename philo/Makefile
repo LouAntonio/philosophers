@@ -6,7 +6,7 @@
 #    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 16:35:01 by lantonio          #+#    #+#              #
-#    Updated: 2024/09/23 17:25:15 by lantonio         ###   ########.fr        #
+#    Updated: 2024/09/30 11:27:39 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,15 +23,21 @@ SRCS	= philosophers.c\
 OBJS	= $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -Iincludes -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJS) -Iincludes -o $(NAME)
+	@echo "\033[1;32mSUCESS\033[37m"
+
+%.o:%.c
+	@$(CC) $(FLAGS) -c $< -o $@
 
 all: $(NAME)
 
 clean :
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
+	@echo "Cleaning objects"
 
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
+	@echo "cleaning executable"
 
 re : fclean all
 

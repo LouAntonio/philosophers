@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:33:26 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/26 13:30:46 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:55:30 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,16 @@ void	set_meal(t_philo *philo)
 	if (philo->meals == philo->main->t_meals)
 		philo->eaten_enouth = 1;
 	pthread_mutex_unlock(&philo->main->main_mutex);
+}
+
+// FROM UTILS
+void	print_death(t_philo *philo, char *message, char *color)
+{
+	pthread_mutex_lock(philo->message);
+	if (philo->main->is_dead == 1)
+	{
+		printf("%s%ldms %d %s\n", color,
+			current_timestamp() - philo->main->time, philo->id, message);
+	}
+	pthread_mutex_unlock(philo->message);
 }

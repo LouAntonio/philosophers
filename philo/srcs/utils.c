@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:49:10 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/26 13:30:58 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:17:47 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_args(int ac, char **av)
 			{
 				printf("Error\nARG %d (%s) is not an integer value,", i, av[i]);
 				printf(" or is lower then 0\n");
-				return (1);
+				return (2);
 			}
 		}
 		return (1);
@@ -49,8 +49,11 @@ int	check_args(int ac, char **av)
 void	print_message(t_philo *philo, char *message, char *color)
 {
 	pthread_mutex_lock(philo->message);
-	printf("%s%ldms %d %s\n", color,
-		current_timestamp() - philo->main->time, philo->id, message);
+	if (philo->main->is_dead == 0)
+	{
+		printf("%s%ldms %d %s\n", color,
+			current_timestamp() - philo->main->time, philo->id, message);
+	}
 	pthread_mutex_unlock(philo->message);
 }
 
