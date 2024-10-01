@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:42:35 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/30 12:01:05 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:02:52 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,19 @@ void	*philo_routine(void	*arg)
 	{
 		while (!get_is_dead(*philo->main))
 		{
-			while (i != get_t_meals(*philo->main))
+			if (i != get_t_meals(*philo->main))
+				philo_actions(philo);
+			else
 			{
-				if (!get_eaten_enouth(philo))
-					philo_actions(philo);
-				else
-					i++;
+				printf("END\n\033[0;37m");
+				break ;
 			}
+			i++;
 		}
 	}
 	else
-	{
 		while (!get_is_dead(*philo->main))
 			philo_actions(philo);
-	}
 	philo->main->all_eaten += 1;
 	return (NULL);
 }

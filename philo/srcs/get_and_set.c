@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:33:26 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/27 15:55:30 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:59:49 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	print_death(t_philo *philo, char *message, char *color)
 	{
 		printf("%s%ldms %d %s\n", color,
 			current_timestamp() - philo->main->time, philo->id, message);
+		printf("%ldms\n", (current_timestamp() - philo->last_meal) - philo->main->t_die);
 	}
 	pthread_mutex_unlock(philo->message);
 }
