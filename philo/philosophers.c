@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:36:19 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/01 12:03:16 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:26:31 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	ac_error(void)
 	printf(" [t_die] [t_eat] [t_sleep] [n_meals (optional)]\n");
 }
 
-void	run_and_exit(t_main *main_program, t_philo *philo,
+void	run_and_exit(t_main *main, t_philo *philo,
 	pthread_t *thread, pthread_mutex_t *fork)
 {
-	check_death(main_program, philo);
-	join_threads(thread, main_program->n_philo);
-	destroy_mutexes(fork, main_program->n_philo);
+	check_death(main, philo);
+	join_threads(thread, main->n_philo);
+	destroy_mutexes(fork, main->n_philo);
 	free(philo);
 	free(thread);
 	free(fork);
@@ -42,7 +42,7 @@ void	run_and_exit(t_main *main_program, t_philo *philo,
 
 int	main(int ac, char **av)
 {
-	t_main			main_program;
+	t_main			main;
 	t_philo			*philo;
 	pthread_t		*thread;
 	pthread_mutex_t	*fork;
@@ -52,13 +52,13 @@ int	main(int ac, char **av)
 	{
 		if (is_all_pos(av))
 		{
-			init_main(ac, av, &main_program);
-			if (!allocate_resources(&philo, &thread, &fork, main_program.n_philo))
+			init_main(ac, av, &main);
+			if (!allocate_resources(&philo, &thread, &fork, main.n_philo))
 			{
-				init_philo(philo, &main_program, fork, &print_locker);
-				if (!init_mutexes(&main_program, fork, print_locker)
-					&& !init_threads(&main_program, philo, thread))
-					run_and_exit(&main_program, philo, thread, fork);
+				init_philo(philo, &main, fork, &print_locker);
+				if (!init_mutexes(&main, fork, print_locker)
+					&& !init_threads(&main, philo, thread))
+					run_and_exit(&main, philo, thread, fork);
 			}
 		}
 	}
