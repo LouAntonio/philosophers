@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:42:35 by lantonio          #+#    #+#             */
-/*   Updated: 2024/09/26 13:30:55 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:57:33 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,24 @@
 void	philo_actions(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
-	print_message(philo, "has taking right right", "\e[0;35m");
+	print_message(philo, "has taken a fork", "\033[0;35m");
+	if (philo->main->n_philo == 1)
+	{
+		while (!get_is_dead(*philo->main))
+			usleep(philo->main->t_die * 1000);
+		pthread_mutex_unlock(philo->right_fork);
+		return ;
+	}
 	pthread_mutex_lock(philo->right_fork);
-	print_message(philo, "has taking left fork", "\e[0;35m");
 	print_message(philo, "is eating", "\033[1;32m");
 	set_meal(philo);
 	philo->last_meal = current_timestamp();
 	usleep(philo->main->t_eat * 1000);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
-	print_message(philo, "is sleeping", "\e[0;36m");
+	print_message(philo, "is sleeping", "\033[0;36m");
 	usleep(philo->main->t_sleep * 1000);
-	print_message(philo, "is thinking", "\033[0;31m");
+	print_message(philo, "is thinking", "\033[0;37m");
 }
 
 void	*philo_routine(void	*arg)
@@ -36,37 +42,46 @@ void	*philo_routine(void	*arg)
 
 	i = 0;
 	philo = (t_philo *)arg;
-	if (!get_t_meals(*philo->main))
-		i = 1;
-	while (!get_is_dead(*philo->main) && i != get_t_meals(*philo->main))
+	if (get_t_meals(*philo->main))
 	{
-		if (!get_eaten_enouth(philo))
-			philo_actions(philo);
-		else
-			i++;
+		while (!get_is_dead(*philo->main))
+		{
+			if (i++ != get_t_meals(*philo->main))
+				philo_actions(philo);
+			else
+				break ;
+		}
 	}
-	printf("OK\n");
+	else
+		while (!get_is_dead(*philo->main))
+			philo_actions(philo);
+	philo->main->all_eaten += 1;
+	philo->main->stop = 0;
+	if (philo->main->all_eaten == philo->main->n_philo)
+		philo->main->is_dead = 1;
+	return (NULL);
 }
 
-void	check_death(t_main *main_program, t_philo *philo)
+void	check_death(t_main *main, t_philo *philo)
 {
 	int	i;
 
-	while (!get_is_dead(*main_program))
+	while (1)
 	{
-		i = 0;
-		while (i < main_program->n_philo)
+		i = -1;
+		while (++i < main->n_philo)
 		{
-			if ((current_timestamp() - (philo[i]).last_meal)
-				> (main_program->t_die + 4))
+			if ((int)(current_timestamp() - (philo[i]).last_meal)
+				> (main->t_die))
 			{
-				main_program->is_dead = 1;
-				print_message(philo, "is dead", "\033[0;32m");
-				break ;
+				main->is_dead = 1;
+				if (get_is_dead(*main) && philo[i].main->stop == 1)
+					print_death(&philo[i], "died", "\033[0;37m\033[41m");
+				return ;
 			}
-			i++;
+			if (philo->main->stop == 0)
+				return ;
 		}
-		usleep(100);
 	}
 }
 
@@ -79,7 +94,6 @@ void	join_threads(pthread_t *thread, int n_philo)
 	{
 		if (pthread_join(thread[i], NULL) != 0)
 			perror("Error while joining threads");
-		usleep(100);
 		i++;
 	}
 }

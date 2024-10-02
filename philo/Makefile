@@ -6,11 +6,11 @@
 #    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 16:35:01 by lantonio          #+#    #+#              #
-#    Updated: 2024/09/23 17:25:15 by lantonio         ###   ########.fr        #
+#    Updated: 2024/10/02 13:42:50 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= philosophers
+NAME	= philo
 CC		= cc
 FLAGS	= -Wall -Wextra -Werror
 
@@ -23,15 +23,21 @@ SRCS	= philosophers.c\
 OBJS	= $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -Iincludes -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJS) -Iincludes -o $(NAME)
+	@echo "\033[1;32mSUCESS"
+
+%.o:%.c
+	@$(CC) $(FLAGS) -c $< -o $@
 
 all: $(NAME)
 
 clean :
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
+	@echo "Cleaning objects"
 
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
+	@echo "cleaning executable"
 
 re : fclean all
 
