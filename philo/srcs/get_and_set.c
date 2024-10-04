@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:33:26 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/02 13:17:02 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/04 16:35:13 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	get_t_meals(t_main main)
 
 void	set_meal(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->main->main_mutex);
+	pthread_mutex_lock(philo->message);
 	philo->meals += 1;
 	if (philo->meals == philo->main->t_meals)
 		philo->eaten_enouth = 1;
-	pthread_mutex_unlock(&philo->main->main_mutex);
+	pthread_mutex_unlock(philo->message);
 }
 
 // FROM UTILS
