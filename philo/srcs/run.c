@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:42:35 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 13:24:24 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:32:13 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,30 @@
 
 void	philo_actions(t_philo *philo)
 {
-	take_forks(philo);
-	print_message(philo, "is eating", "");
-	set_meal(philo);
-	pthread_mutex_lock(philo->message);
-	philo->last_meal = current_timestamp();
-	pthread_mutex_unlock(philo->message);
-	usleep(philo->main->t_eat * 1000);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
-	print_message(philo, "is sleeping", "");
-	usleep(philo->main->t_sleep * 1000);
-	print_message(philo, "is thinking", "");
+	if (philo->main->n_philo == 1)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_message(philo, "has taken a fork", "\e[0;35m");
+		while (!get_is_dead(*philo->main))
+			usleep(philo->main->t_die * 1000);
+		pthread_mutex_unlock(philo->left_fork);
+		return ;
+	}
+	else
+	{
+		take_forks(philo);
+		print_message(philo, "is eating", "\033[1;32m");
+		set_meal(philo);
+		pthread_mutex_lock(philo->message);
+		philo->last_meal = current_timestamp();
+		pthread_mutex_unlock(philo->message);
+		usleep(philo->main->t_eat * 1000);
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+		print_message(philo, "is sleeping", "\e[0;36m");
+		usleep(philo->main->t_sleep * 1000);
+		print_message(philo, "is thinking", "\033[0;37m");
+	}
 }
 
 void	*philo_routine(void	*arg)
@@ -49,7 +61,6 @@ void	*philo_routine(void	*arg)
 		while (!get_is_dead(*philo->main))
 			philo_actions(philo);
 	pthread_mutex_lock(philo->message);
-	philo->main->all_eaten += 1;
 	philo->check = 0;
 	pthread_mutex_unlock(philo->message);
 	return (NULL);
@@ -65,7 +76,7 @@ void	check_death(t_main *main, t_philo *philo)
 		while (++i < main->n_philo)
 		{
 			if ((int)(current_timestamp() - (philo[i]).last_meal)
-				> (main->t_die))
+				> ((main->t_die) + 5))
 			{
 				pthread_mutex_lock(&philo->main->main_mutex);
 				main->is_dead = 1;
@@ -73,7 +84,7 @@ void	check_death(t_main *main, t_philo *philo)
 				{
 					pthread_mutex_unlock(&philo->main->main_mutex);
 					if (philo[i].check == 1)
-						print_death(&philo[i], "died", "");
+						print_death(&philo[i], "died", "\033[0;37m\033[41m");
 					return ;
 				}
 				pthread_mutex_unlock(&philo->main->main_mutex);

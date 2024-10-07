@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:06:57 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 13:45:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:21:05 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_main
 	int				t_sleep;
 	int				t_meals;
 	_Atomic int		is_dead;
-	int				all_eaten;
 	unsigned long	time;
 	pthread_mutex_t	main_mutex;
 }					t_main;
@@ -39,7 +38,6 @@ typedef struct s_philo
 	int						id;
 	_Atomic unsigned long	last_meal;
 	int						meals;
-	int						eaten_enouth;
 	int						check;
 	pthread_mutex_t			*message;
 	pthread_mutex_t			*left_fork;
@@ -56,10 +54,9 @@ void			print_message(t_philo *philo, char *message, char *color);
 
 // INITIALIZATION
 void			init_main(int ac, char **av, t_main *main);
+int				init_mutexes(t_main *main, pthread_mutex_t *fork);
 int				init_threads(t_main *main,
 					t_philo *philo, pthread_t *thread);
-int				init_mutexes(t_main *main, pthread_mutex_t *fork,
-					pthread_mutex_t print_locker);
 int				allocate_resources(t_philo **philo, pthread_t **thread,
 					pthread_mutex_t **fork, int n_philo);
 void			init_philo(t_philo *philo, t_main *main,

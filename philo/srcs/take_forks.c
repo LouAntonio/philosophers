@@ -6,44 +6,30 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:24:12 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 13:47:46 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:20:04 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	left_fork(t_philo *philo)
+void	left_first(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
-	print_message(philo, "has taken a fork", "");
-	if (philo->main->n_philo == 1)
-	{
-		while (!get_is_dead(*philo->main))
-			usleep(philo->main->t_die * 1000);
-		pthread_mutex_lock(philo->left_fork);
-		return ;
-	}
+	print_message(philo, "has taken a fork", "\e[0;35m");
 	pthread_mutex_lock(philo->right_fork);
 }
 
-void	right_fork(t_philo *philo)
+void	right_first(t_philo *philo)
 {
 	pthread_mutex_lock(philo->right_fork);
-	print_message(philo, "has taken a fork", "");
-	if (philo->main->n_philo == 1)
-	{
-		while (!get_is_dead(*philo->main))
-			usleep(philo->main->t_die * 1000);
-		pthread_mutex_lock(philo->right_fork);
-		return ;
-	}
+	print_message(philo, "has taken a fork", "\e[0;35m");
 	pthread_mutex_lock(philo->left_fork);
 }
 
 void	take_forks(t_philo *philo)
 {
 	if (philo->left_fork < philo->right_fork)
-		left_fork(philo);
+		left_first(philo);
 	else
-		right_fork(philo);
+		right_first(philo);
 }

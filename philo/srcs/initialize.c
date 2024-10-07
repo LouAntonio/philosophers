@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:06:28 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 13:46:03 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:20:34 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_philo(t_philo *philo, t_main *main,
 		philo[i].id = i + 1;
 		philo[i].last_meal = current_timestamp();
 		philo[i].meals = 0;
-		philo[i].eaten_enouth = 0;
 		philo[i].check = 1;
 		philo[i].message = print_locker;
 		philo[i].left_fork = &fork[i];
@@ -42,19 +41,16 @@ void	init_main(int ac, char **av, t_main *main)
 	main->t_sleep = ft_atoi(av[4]);
 	main->t_meals = 0;
 	main->is_dead = 0;
-	main->all_eaten = 0;
 	main->time = current_timestamp();
 	if (ac == 6)
 		main->t_meals = ft_atoi(av[5]);
 }
 
-int	init_mutexes(t_main *main, pthread_mutex_t *fork,
-	pthread_mutex_t print_locker)
+int	init_mutexes(t_main *main, pthread_mutex_t *fork)
 {
 	int	i;
 
 	i = 0;
-	(void)print_locker;
 	while (i < main->n_philo)
 	{
 		if (pthread_mutex_init(&fork[i], NULL) != 0)

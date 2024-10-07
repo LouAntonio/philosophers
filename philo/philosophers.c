@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:36:19 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 13:02:56 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:37:37 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int ac, char **av)
 			if (!allocate_resources(&philo, &thread, &fork, main.n_philo))
 			{
 				init_philo(philo, &main, fork, &print_locker);
-				if (!init_mutexes(&main, fork, print_locker)
+				if (!init_mutexes(&main, fork)
 					&& !init_threads(&main, philo, thread))
 					run_and_exit(&main, philo, thread, fork);
 			}
