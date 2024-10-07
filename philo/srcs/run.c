@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:42:35 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/04 16:38:39 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:24:24 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 
 void	philo_actions(t_philo *philo)
 {
-	pthread_mutex_lock(philo->left_fork);
-	print_message(philo, "has taken a fork", "");
-	if (philo->main->n_philo == 1)
-	{
-		while (!get_is_dead(*philo->main))
-			usleep(philo->main->t_die * 1000);
-		pthread_mutex_unlock(philo->right_fork);
-		return ;
-	}
-	pthread_mutex_lock(philo->right_fork);
+	take_forks(philo);
 	print_message(philo, "is eating", "");
 	set_meal(philo);
 	pthread_mutex_lock(philo->message);
@@ -59,9 +50,7 @@ void	*philo_routine(void	*arg)
 			philo_actions(philo);
 	pthread_mutex_lock(philo->message);
 	philo->main->all_eaten += 1;
-	philo->main->stop = 0;
-	if (philo->main->all_eaten == philo->main->n_philo)
-		philo->main->is_dead = 1;
+	philo->check = 0;
 	pthread_mutex_unlock(philo->message);
 	return (NULL);
 }
@@ -80,10 +69,14 @@ void	check_death(t_main *main, t_philo *philo)
 			{
 				pthread_mutex_lock(&philo->main->main_mutex);
 				main->is_dead = 1;
+				if (main->is_dead == 1)
+				{
+					pthread_mutex_unlock(&philo->main->main_mutex);
+					if (philo[i].check == 1)
+						print_death(&philo[i], "died", "");
+					return ;
+				}
 				pthread_mutex_unlock(&philo->main->main_mutex);
-				if (get_is_dead(*main) && philo[i].main->stop == 1)
-					print_death(&philo[i], "died", "");
-				return ;
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:06:57 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/02 13:41:52 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:45:20 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ typedef struct s_main
 	int				t_eat;
 	int				t_sleep;
 	int				t_meals;
-	int				is_dead;
+	_Atomic int		is_dead;
 	int				all_eaten;
-	int				stop;
 	unsigned long	time;
 	pthread_mutex_t	main_mutex;
 }					t_main;
@@ -37,16 +36,16 @@ typedef struct s_main
 // PHILOSOPHER STRUCTURE
 typedef struct s_philo
 {
-	int				id;
-	unsigned long	last_meal;
-	int				meals;
-	int				eaten_enouth;
-	int				check;
-	pthread_mutex_t	*message;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	t_main			*main;
-}					t_philo;
+	int						id;
+	_Atomic unsigned long	last_meal;
+	int						meals;
+	int						eaten_enouth;
+	int						check;
+	pthread_mutex_t			*message;
+	pthread_mutex_t			*left_fork;
+	pthread_mutex_t			*right_fork;
+	t_main					*main;
+}							t_philo;
 
 // UTILS
 int				ft_atoi(char *str);
@@ -68,6 +67,7 @@ void			init_philo(t_philo *philo, t_main *main,
 
 // RUN
 void			*philo_routine(void	*arg);
+void			take_forks(t_philo *philo);
 void			join_threads(pthread_t *thread, int n_philo);
 void			check_death(t_main *main, t_philo *philo);
 void			destroy_mutexes(pthread_mutex_t *fork, int n_philo);
@@ -76,5 +76,6 @@ void			destroy_mutexes(pthread_mutex_t *fork, int n_philo);
 int				get_is_dead(t_main main);
 int				get_t_meals(t_main main);
 void			set_meal(t_philo *philo);
+void			set_last_meal(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:06:28 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/02 13:42:30 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:46:03 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_philo(t_philo *philo, t_main *main,
 	int	i;
 
 	i = 0;
+	pthread_mutex_init(print_locker, NULL);
 	while (i < (*main).n_philo)
 	{
 		philo[i].id = i + 1;
@@ -42,7 +43,6 @@ void	init_main(int ac, char **av, t_main *main)
 	main->t_meals = 0;
 	main->is_dead = 0;
 	main->all_eaten = 0;
-	main->stop = 1;
 	main->time = current_timestamp();
 	if (ac == 6)
 		main->t_meals = ft_atoi(av[5]);
@@ -54,6 +54,7 @@ int	init_mutexes(t_main *main, pthread_mutex_t *fork,
 	int	i;
 
 	i = 0;
+	(void)print_locker;
 	while (i < main->n_philo)
 	{
 		if (pthread_mutex_init(&fork[i], NULL) != 0)
@@ -61,8 +62,6 @@ int	init_mutexes(t_main *main, pthread_mutex_t *fork,
 		i++;
 	}
 	if (pthread_mutex_init(&main->main_mutex, NULL) != 0)
-		return (perror("Error while initializating mutex"), 1);
-	if (pthread_mutex_init(&print_locker, NULL) != 0)
 		return (perror("Error while initializating mutex"), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 16:35:01 by lantonio          #+#    #+#              #
-#    Updated: 2024/10/02 13:42:50 by lantonio         ###   ########.fr        #
+#    Updated: 2024/10/07 13:26:40 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS	= philosophers.c\
 			./srcs/run.c\
 			./srcs/utils.c\
 			./srcs/initialize.c\
+			./srcs/take_forks.c\
 			./srcs/get_and_set.c\
 
 OBJS	= $(SRCS:.c=.o)

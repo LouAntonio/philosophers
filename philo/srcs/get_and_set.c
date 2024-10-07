@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:33:26 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/04 16:35:13 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:07:42 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,18 @@ void	set_meal(t_philo *philo)
 	pthread_mutex_unlock(philo->message);
 }
 
+void	set_last_meal(t_philo *philo)
+{
+	pthread_mutex_lock(philo->message);
+	philo->last_meal = current_timestamp();
+	pthread_mutex_unlock(philo->message);
+}
+
 // FROM UTILS
 void	print_death(t_philo *philo, char *message, char *color)
 {
 	pthread_mutex_lock(philo->message);
-	if (philo->main->is_dead == 1)
+	if (get_is_dead(*philo->main))
 	{
 		printf("%s%ldms %d %s\n", color,
 			current_timestamp() - philo->main->time, philo->id, message);
