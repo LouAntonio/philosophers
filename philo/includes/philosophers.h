@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:06:57 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/09 09:09:48 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:26:22 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void			print_message(t_philo *philo, char *message, char *color);
 
 // INITIALIZATION
 void			init_main(int ac, char **av, t_main *main);
-int				init_mutexes(t_main *main, pthread_mutex_t *fork);
-int				init_threads(t_main *main,
+void			init_mutexes(t_main *main, pthread_mutex_t *fork);
+void			init_threads(t_main *main,
 					t_philo *philo, pthread_t *thread);
-int				allocate_resources(t_philo **philo, pthread_t **thread,
+void			allocate_resources(t_philo **philo, pthread_t **thread,
 					pthread_mutex_t **fork, int n_philo);
 void			init_philo(t_philo *philo, t_main *main,
 					pthread_mutex_t *fork, pthread_mutex_t *print_locker);

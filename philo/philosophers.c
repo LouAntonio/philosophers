@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:36:19 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/08 08:48:36 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:51:49 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ int	main(int ac, char **av)
 		if (is_all_pos(av))
 		{
 			init_main(ac, av, &main);
-			if (!allocate_resources(&philo, &thread, &fork, main.n_philo))
-			{
-				init_philo(philo, &main, fork, &print_locker);
-				if (!init_mutexes(&main, fork)
-					&& !init_threads(&main, philo, thread))
-					run_and_exit(&main, philo, thread, fork);
-			}
+			allocate_resources(&philo, &thread, &fork, main.n_philo);
+			init_philo(philo, &main, fork, &print_locker);
+			init_mutexes(&main, fork);
+			init_threads(&main, philo, thread);
+			run_and_exit(&main, philo, thread, fork);
 		}
 	}
 	else

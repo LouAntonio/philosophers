@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:06:28 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/09 09:09:21 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:25:53 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,44 +45,36 @@ void	init_main(int ac, char **av, t_main *main)
 		main->t_meals = ft_atoi(av[5]);
 }
 
-int	init_mutexes(t_main *main, pthread_mutex_t *fork)
+void	init_mutexes(t_main *main, pthread_mutex_t *fork)
 {
 	int	i;
 
 	i = 0;
 	while (i < main->n_philo)
 	{
-		if (pthread_mutex_init(&fork[i], NULL) != 0)
-			return (perror("Error while initializating mutex"), 1);
+		pthread_mutex_init(&fork[i], NULL);
 		i++;
 	}
-	if (pthread_mutex_init(&main->main_mutex, NULL) != 0)
-		return (perror("Error while initializating mutex"), 1);
-	return (0);
+	pthread_mutex_init(&main->main_mutex, NULL);
 }
 
-int	init_threads(t_main *main, t_philo *philo, pthread_t *thread)
+void	init_threads(t_main *main, t_philo *philo, pthread_t *thread)
 {
 	int	i;
 
 	i = 0;
 	while (i < main->n_philo)
 	{
-		if (pthread_create(&thread[i], NULL, &philo_routine, &philo[i]) != 0)
-			return (perror("Error while creating threads"), 1);
+		pthread_create(&thread[i], NULL, &philo_routine, &philo[i]);
 		usleep(100);
 		i++;
 	}
-	return (0);
 }
 
-int	allocate_resources(t_philo **philo, pthread_t **thread,
+void	allocate_resources(t_philo **philo, pthread_t **thread,
 	pthread_mutex_t **fork, int n_philo)
 {
 	*philo = (t_philo *)malloc(sizeof(t_philo) * n_philo);
 	*thread = (pthread_t *)malloc(sizeof(pthread_t) * n_philo);
 	*fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * n_philo);
-	if (!(*philo) || !(*thread) || !(*fork))
-		return (printf("Error while alocating memmory\n"), 1);
-	return (0);
 }
