@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:42:35 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 16:32:13 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:09:11 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	philo_actions(t_philo *philo)
 	{
 		take_forks(philo);
 		print_message(philo, "is eating", "\033[1;32m");
-		set_meal(philo);
 		pthread_mutex_lock(philo->message);
 		philo->last_meal = current_timestamp();
 		pthread_mutex_unlock(philo->message);

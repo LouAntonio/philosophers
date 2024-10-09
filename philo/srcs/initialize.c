@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:06:28 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 16:20:34 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:09:21 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	init_philo(t_philo *philo, t_main *main,
 	{
 		philo[i].id = i + 1;
 		philo[i].last_meal = current_timestamp();
-		philo[i].meals = 0;
 		philo[i].check = 1;
 		philo[i].message = print_locker;
 		philo[i].left_fork = &fork[i];

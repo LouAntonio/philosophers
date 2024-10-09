@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:33:26 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 16:20:05 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:09:18 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ int	get_t_meals(t_main main)
 	value = main.t_meals;
 	pthread_mutex_unlock(&main.main_mutex);
 	return (value);
-}
-
-void	set_meal(t_philo *philo)
-{
-	pthread_mutex_lock(philo->message);
-	philo->meals += 1;
-	pthread_mutex_unlock(philo->message);
-}
-
-void	set_last_meal(t_philo *philo)
-{
-	pthread_mutex_lock(philo->message);
-	philo->last_meal = current_timestamp();
-	pthread_mutex_unlock(philo->message);
 }
 
 // FROM UTILS

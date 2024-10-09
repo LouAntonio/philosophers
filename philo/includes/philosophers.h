@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:06:57 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 16:21:05 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:09:48 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ typedef struct s_philo
 {
 	int						id;
 	_Atomic unsigned long	last_meal;
-	int						meals;
-	int						check;
+	_Atomic int				check;
 	pthread_mutex_t			*message;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
@@ -72,7 +71,5 @@ void			destroy_mutexes(pthread_mutex_t *fork, int n_philo);
 // GETTERS AND SETTERS
 int				get_is_dead(t_main main);
 int				get_t_meals(t_main main);
-void			set_meal(t_philo *philo);
-void			set_last_meal(t_philo *philo);
 
 #endif
