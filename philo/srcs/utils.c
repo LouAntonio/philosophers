@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:49:10 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/09 11:42:05 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/10 08:38:45 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_args(int ac, char **av)
 void	print_message(t_philo *philo, char *message, char *color)
 {
 	pthread_mutex_lock(philo->message);
-	if (philo->main->is_dead == 0)
+	if (get_is_dead(*philo->main) == 0)
 	{
 		printf("%s%ldms %d %s\n", color,
 			current_timestamp() - philo->main->time, philo->id, message);

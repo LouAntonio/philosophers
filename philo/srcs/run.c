@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:42:35 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/09 09:09:11 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:33:02 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,26 @@ void	*philo_routine(void	*arg)
 void	check_death(t_main *main, t_philo *philo)
 {
 	int	i;
+	int	last_meal;
 
 	while (1)
 	{
 		i = -1;
 		while (++i < main->n_philo)
 		{
-			if ((int)(current_timestamp() - (philo[i]).last_meal)
-				> ((main->t_die) + 5))
+			pthread_mutex_lock((philo[i]).message);
+			last_meal = (int)philo[i].last_meal;
+			pthread_mutex_unlock((philo[i]).message);
+			if ((int)(current_timestamp() - (last_meal))
+				> ((main->t_die) + 4))
 			{
-				pthread_mutex_lock(&philo->main->main_mutex);
-				main->is_dead = 1;
+				set_is_dead(philo->main);
 				if (main->is_dead == 1)
 				{
-					pthread_mutex_unlock(&philo->main->main_mutex);
-					if (philo[i].check == 1)
+					if (get_check(*philo))
 						print_death(&philo[i], "died", "\033[0;37m\033[41m");
 					return ;
 				}
-				pthread_mutex_unlock(&philo->main->main_mutex);
 			}
 		}
 	}

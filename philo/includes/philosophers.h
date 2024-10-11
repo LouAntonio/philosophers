@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:06:57 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/09 11:26:22 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/10 12:03:11 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_main
 	int				t_eat;
 	int				t_sleep;
 	int				t_meals;
-	_Atomic int		is_dead;
+	int				is_dead;
 	unsigned long	time;
 	pthread_mutex_t	main_mutex;
 }					t_main;
@@ -36,8 +36,8 @@ typedef struct s_main
 typedef struct s_philo
 {
 	int						id;
-	_Atomic unsigned long	last_meal;
-	_Atomic int				check;
+	unsigned long			last_meal;
+	int						check;
 	pthread_mutex_t			*message;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
@@ -54,8 +54,7 @@ void			print_message(t_philo *philo, char *message, char *color);
 // INITIALIZATION
 void			init_main(int ac, char **av, t_main *main);
 void			init_mutexes(t_main *main, pthread_mutex_t *fork);
-void			init_threads(t_main *main,
-					t_philo *philo, pthread_t *thread);
+void			init_threads(t_main *main, t_philo *philo, pthread_t *thread);
 void			allocate_resources(t_philo **philo, pthread_t **thread,
 					pthread_mutex_t **fork, int n_philo);
 void			init_philo(t_philo *philo, t_main *main,
@@ -71,5 +70,7 @@ void			destroy_mutexes(pthread_mutex_t *fork, int n_philo);
 // GETTERS AND SETTERS
 int				get_is_dead(t_main main);
 int				get_t_meals(t_main main);
+int				get_check(t_philo philo);
+void			set_is_dead(t_main *main);
 
 #endif

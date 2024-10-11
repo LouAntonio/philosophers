@@ -6,12 +6,12 @@
 #    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 16:35:01 by lantonio          #+#    #+#              #
-#    Updated: 2024/10/09 16:28:32 by lantonio         ###   ########.fr        #
+#    Updated: 2024/10/10 08:36:24 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
-CC		= cc
+CC		= cc -fsanitize=thread
 FLAGS	= -Wall -Wextra -Werror
 
 SRCS	= philosophers.c\
