@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:24:12 by lantonio          #+#    #+#             */
-/*   Updated: 2024/10/07 16:20:04 by lantonio         ###   ########.fr       */
+/*   Updated: 2024/10/15 08:53:13 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	left_first(t_philo *philo)
 	pthread_mutex_lock(philo->left_fork);
 	print_message(philo, "has taken a fork", "\e[0;35m");
 	pthread_mutex_lock(philo->right_fork);
+	print_message(philo, "has taken a fork", "\e[0;35m");
 }
 
 void	right_first(t_philo *philo)
@@ -24,6 +25,7 @@ void	right_first(t_philo *philo)
 	pthread_mutex_lock(philo->right_fork);
 	print_message(philo, "has taken a fork", "\e[0;35m");
 	pthread_mutex_lock(philo->left_fork);
+	print_message(philo, "has taken a fork", "\e[0;35m");
 }
 
 void	take_forks(t_philo *philo)
